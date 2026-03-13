@@ -1,0 +1,58 @@
+---
+interface Props {
+  size?: "m" | " l";
+  fullWidth?: boolean;
+  href?: string;
+}
+
+const { size = "m", fullWidth = false, href = "" } = Astro.props;
+
+const TagName = href ? "a" : "button";
+const classList = ["button", `size-${size}`, fullWidth && "full-width"];
+---
+
+{
+  href ? (
+    <TagName href={href} target="_blank" class:list={classList}>
+      <slot />
+    </TagName>
+  ) : (
+    <TagName type="button" class:list={classList}>
+      <slot />
+    </TagName>
+  )
+}
+
+<style>
+  .button {
+    border: none;
+
+    font-weight: 510;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: var(--color-primary);
+    background-color: var(--color-primary-bg);
+    border-radius: var(--border-radius16);
+    padding: 0 var(--space16);
+    display: inline-flex;
+    cursor: pointer;
+
+    &.size-m {
+      height: 48px;
+      line-height: 48px;
+    }
+    &.size-l {
+      height: 56px;
+      line-height: 56px;
+    }
+
+    &.full-width {
+      width: 100%;
+    }
+
+    &:hover {
+      color: var(--color-primary-hover);
+    }
+  }
+</style>
