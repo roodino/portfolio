@@ -1,13 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Button from "../components/common/button.astro";
+import Intro from "../components/blocks/intro.astro";
+import Projects from "../components/blocks/projects.astro";
+import Jobs from "../components/blocks/jobs.astro";
+import Reviews from "../components/blocks/reviews.astro";
 ---
 
 <Layout>
-  <h1 class="h2">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore id impedit
-    itaque maxime molestiae molestias nesciunt omnis porro quas quidem quod
-    rerum saepe sed sunt suscipit, tenetur vero voluptate voluptatum.
-  </h1>
-  <Button>Test button</Button>
+  <Intro messages={[]} links={[]} />
+  <Projects />
+  <Jobs />
+  <Reviews />
+  <Intro messages={[]} links={[]} />
 </Layout>

@@ -1,6 +1,6 @@
 ---
 interface Props {
-  size?: "m" | " l";
+  size?: "m" | "l";
   fullWidth?: boolean;
   href?: string;
 }
@@ -36,6 +36,7 @@ const classList = ["button", `size-${size}`, fullWidth && "full-width"];
     border-radius: var(--border-radius16);
     padding: 0 var(--space16);
     display: inline-flex;
+    justify-content: center;
     cursor: pointer;
     transition: color var(--transition) ease-in-out;
 
