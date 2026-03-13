@@ -1,0 +1,49 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  transition:
+    color var(--transition),
+    background var(--transition),
+    fill var(--transition),
+    stroke var(--transition);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  scrollbar-gutter: stable;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100dvh;
+  background-color: var(--color-bg-main);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: 20px;
+  font-family: var(--font-sf-pro), sans-serif;
+  font-synthesis: none;
+  color-scheme: dark light;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+}
+
+:is(button, button:focus) {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:is(button, input[type="text"], textarea) {
+  /*font-family: var(--font-primary), sans-serif;*/
+}
