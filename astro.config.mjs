@@ -3,6 +3,9 @@ import {defineConfig, fontProviders} from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
+    site: 'https://roodino.github.io',
+    base: '/portfolio/',
+    output: 'static',
     fonts: [{
         provider: fontProviders.local(),
         name: "SF-Pro",
