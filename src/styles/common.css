@@ -2,11 +2,6 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  transition:
-    color var(--transition),
-    background var(--transition),
-    fill var(--transition),
-    stroke var(--transition);
 }
 
 * {
