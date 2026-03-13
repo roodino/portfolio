@@ -9,6 +9,12 @@
     stroke var(--transition);
 }
 
+* {
+  &::selection {
+    background-color: var(--color-primary-bg);
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -27,7 +33,7 @@ body {
   line-height: 1.5;
   font-weight: 400;
   font-size: 20px;
-  font-family: var(--font-sf-pro), sans-serif;
+  font-family: var(--font-primary), sans-serif;
   font-synthesis: none;
   color-scheme: dark light;
   text-rendering: optimizelegibility;
@@ -45,5 +51,5 @@ a {
 }
 
 :is(button, input[type="text"], textarea) {
-  /*font-family: var(--font-primary), sans-serif;*/
+  font-family: var(--font-primary), sans-serif;
 }

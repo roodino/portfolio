@@ -1,8 +1,13 @@
 :root {
-  --color-primary: #3b72f3;
+  --color-primary: #2953e2;
+  --color-primary-bg: #edf1ff;
+
+  --color-secondary-bg: #ffeded;
+  --color-third-bg: #f2edff;
 
   --color-bg-main: #ffffff;
   --color-text-primary: #000000;
+  --color-text-secondary: rgba(0, 0, 0, 0.2);
 
   --space: 4px;
   --space8: calc(var(--space) * 2);
@@ -24,31 +29,11 @@
   --transition: 0.2s;
   --transition-long: 0.4s;
 
-  /*--font-h1: normal 600 3rem/1.2em "Inter", sans-serif;*/
-  /*--font-h2: normal 600 2.75rem/1.2em "Inter", sans-serif;*/
-  /*--font-h3: normal 600 2.4rem/1.2em "Inter", sans-serif;*/
-  /*--font-h4: normal 600 1.75rem/1.257em "Inter", sans-serif;*/
-  /*--font-h5: normal 600 1.4rem/1.2em "Inter", sans-serif;*/
-  /*--font-h6: normal 600 1rem/1.4em "Inter", sans-serif;*/
-  /*--font-title-1: normal 500 0.8rem/1.5em "Inter", sans-serif;*/
-  /*--font-title-2: normal 500 0.7rem/1.43em "Inter", sans-serif;*/
-  /*--font-title-3: normal 500 0.6rem/1.33em "Inter", sans-serif;*/
-  /*--font-body-1: normal 400 0.8rem/1.5em "Inter", sans-serif;*/
-  /*--font-body-2: normal 400 0.7rem/1.42em "Inter", sans-serif;*/
-  /*--font-body-3: normal 400 0.6rem/1.33em "Inter", sans-serif;*/
-  /*--font-caption: normal 400 0.55rem/1.45em "Inter", sans-serif;*/
+  --font-primary: var(--font-sf-pro);
 
   --scrollbar-track-color: transparent;
   --scrollbar-color: var(--color-primary);
   --scrollbar-side: var(--space8);
 
-  /*--container-width: 1300px;*/
-  /*--header-height: 64px;*/
-}
-
-/* desktop */
-@media (width >= 991px) {
-  /*:root {*/
-  /*  --header-height: 80px;*/
-  /*}*/
+  --container-width: 1145px;
 }
