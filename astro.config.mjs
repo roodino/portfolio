@@ -3,8 +3,7 @@ import {defineConfig, fontProviders} from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://roodino.github.io',
-    base: '/portfolio/',
+    site: 'https://gazov.pro',
     output: 'static',
     fonts: [{
         provider: fontProviders.local(),
