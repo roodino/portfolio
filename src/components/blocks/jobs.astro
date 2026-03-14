@@ -10,34 +10,77 @@ const jobs = [
   {
     text: "Руковожу продуктовым дизайном в Urent. Отвечаю за мобильное приложение, сценарии аренды и общий пользовательский опыт.",
     bg: "#804AFF",
-    Logo: urent,
+    logo: urent,
   },
   {
     text: "В команде бизнес-сообществ ВКонтакте развивал функции для бизнес-страниц и улучшал инструменты для компаний и брендов.",
     bg: "#0077FF",
-    Logo: vk,
+    logo: vk,
   },
   {
     text: "Более четырёх лет развивал ключевые части приложения Joom: карточку товара, превью, промомеханики, поиск и каталог.",
     bg: "#3D3F56",
-    Logo: joom,
+    logo: joom,
   },
   {
     text: "Спроектировал приложение для волонтёров Чемпионата мира 2018, которое координировало работу 20 000 человек.",
     bg: "#093697",
-    Logo: fifa,
+    logo: fifa,
   },
   {
     text: "Спроектировал международный сайт для «Эвалар» с каталогом продукции и возможностью связаться с компанией по вопросам сотрудничества.",
     bg: "#00953B",
-    Logo: evalar,
+    logo: evalar,
   },
   {
     text: "Как старший продуктовый дизайнер развивал ключевые части торговой платформы и проектировал основные пользовательские сценарии.",
     bg: "#FFDC3C",
-    Logo: binomo,
+    logo: binomo,
   },
 ];
 ---
 
-<h2 class="h2">С кем работал</h2>
+<div class="jobs">
+  <h2 class="h2">С кем работал</h2>
+
+  <div class="grid">
+    {
+      jobs.map(({ text, bg, logo }) => {
+        const Logo = logo;
+
+        return (
+          <div class="card">
+            <div class="card__logo" style={`background-color: ${bg}`}>
+              <Logo />
+            </div>
+            <p class="p">{text}</p>
+          </div>
+        );
+      })
+    }
+  </div>
+</div>
+
+<style>
+  .jobs {
+    display: grid;
+    gap: var(--space20);
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--space32);
+
+    .card {
+      display: grid;
+      gap: var(--space12);
+
+      & .card__logo {
+        display: grid;
+        place-items: center;
+        aspect-ratio: 353 / 88;
+        border-radius: var(--border-radius16);
+      }
+    }
+  }
+</style>

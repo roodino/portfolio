@@ -1,5 +1,5 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import authorPicture from "../../assets/images/author.webp";
 
 interface Props {
   messages: string[];
@@ -10,14 +10,102 @@ const { messages, links } = Astro.props;
 ---
 
 <div class="intro">
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi assumenda
-  deleniti deserunt, eaque enim error, est ex explicabo hic molestiae molestias,
-  obcaecati optio perferendis provident quos reprehenderit repudiandae tempore
-  voluptatum.
+  <div class="author">
+    <div class="author__picture">
+      <img
+        src={authorPicture.src}
+        alt="Фото Рустама"
+        width="144"
+        height="144"
+      />
+    </div>
+  </div>
+  <div class="feed">
+    {
+      messages.map((message) => (
+        <div>
+          <div class:list={["feed__item", "p"]}>{message}</div>
+        </div>
+      ))
+    }
+    {
+      links.map(({ href, label }) => (
+        <div>
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class:list={["feed__item", "p"]}
+          >
+            {label}
+          </a>
+        </div>
+      ))
+    }
+  </div>
 </div>
 
 <style>
   .intro {
-    max-width: 532px;
+    --avatar-size: 72px;
+
+    display: grid;
+    grid-template-columns: var(--avatar-size) 1fr;
+    gap: var(--space16);
+
+    .author {
+      & .author__picture {
+        position: sticky;
+        top: var(--space20);
+        width: var(--avatar-size);
+        height: var(--avatar-size);
+
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: 5px;
+          right: 5px;
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+          background-color: #26de20;
+          border: 3px solid var(--color-bg-main);
+        }
+
+        img {
+          border: 1px solid #0000000a;
+          border-radius: 50%;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+
+    .feed {
+      display: grid;
+      gap: var(--space12);
+
+      /* tablet */
+      @media (width >= 768px) {
+        max-width: 532px;
+      }
+
+      & .feed__item {
+        background-color: var(--color-primary-bg);
+        padding: var(--space12) var(--space16);
+        border-radius: var(--space16);
+
+        &[href] {
+          display: inline-block;
+          color: var(--color-primary);
+          transition: color var(--transition) ease-in-out;
+
+          &:hover {
+            color: var(--color-primary-hover);
+          }
+        }
+      }
+    }
   }
 </style>

@@ -35,7 +35,7 @@ const reviewAttrs: Record<
   },
 };
 
-const reviews = [
+const initReviews = [
   {
     text: "Хочу отметить особый уровень способностей Рустама в работе над концептуальными решениями и редизайнами. Рустам прислушивается к коллегам, аргументированно отстаивает свою точку зрения, задаёт правильные вопросы там где это необходимо. Проявляет хорошее знание продукта и понимание бизнес задач, отличная нацеленность на результат.",
     meta: reviewAttrs[Company.VK],
@@ -61,10 +61,86 @@ const reviews = [
     meta: reviewAttrs[Company.Urent],
   },
 ];
+
+const reviews = [...initReviews];
+reviews.length = 3;
 ---
 
-<h2 class:list={["h2", "title"]}>
-  Отзывы обо мне <span>{reviews.length}</span>
-</h2>
+<div class="reviews">
+  <h2 class:list={["h2", "title"]}>
+    Отзывы обо мне <span>{initReviews.length}</span>
+  </h2>
 
-<Button size="l" fullWidth>Показать еще</Button>
+  <div class="grid">
+    {
+      reviews.map(({ text, meta }) => (
+        <div class="card" style={`background-color: var(${meta.bgCard})`}>
+          <div class="card__head">
+            <div class="logo">
+              <img
+                src={meta.logo}
+                alt={`Логотип ${meta.label}`}
+                width="48"
+                height="48"
+              />
+            </div>
+            <p class:list={["company", "p"]}>{meta.label}</p>
+            <p class:list={["year", "p"]}>{meta.year}</p>
+          </div>
+          <p class:list={["card__text", "p"]}>{text}</p>
+        </div>
+      ))
+    }
+  </div>
+
+  <Button size="l" fullWidth>Показать еще</Button>
+</div>
+
+<style>
+  .reviews {
+    display: grid;
+    gap: var(--space20);
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--space20);
+
+    .card {
+      display: grid;
+      gap: var(--space20);
+      padding: var(--space20);
+      border-radius: var(--border-radius16);
+
+      & .card__head {
+        display: grid;
+        grid-template-columns: 48px 1fr;
+        gap: 2px var(--space12);
+        align-items: center;
+        grid-template-areas:
+          "logo company"
+          "logo year";
+
+        .logo {
+          grid-area: logo;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          overflow: hidden;
+        }
+
+        .company {
+          grid-area: company;
+        }
+
+        .year {
+          grid-area: year;
+          color: var(--color-text-secondary);
+        }
+      }
+
+      & .card__text {
+      }
+    }
+  }
+</style>
