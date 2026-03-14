@@ -5,6 +5,10 @@ import {defineConfig, fontProviders} from 'astro/config';
 export default defineConfig({
     site: 'https://gazov.pro',
     output: 'static',
+    redirects: {
+        "/": "/work",
+        "/404": "/work",
+    },
     fonts: [{
         provider: fontProviders.local(),
         name: "SF-Pro",
