@@ -16,6 +16,7 @@
     "not dead"
   ],
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.1",
     "astro": "^6.0.2"
   },
   "devDependencies": {

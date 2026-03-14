@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gazov.pro/sitemap-index.xml

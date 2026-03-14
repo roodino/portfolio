@@ -311,7 +311,7 @@ const initReviews = [
 ];
 
 const reviews = [...initReviews];
-reviews.length = 3;
+reviews.length = 6;
 ---
 
 <div class="reviews">
@@ -330,6 +330,7 @@ reviews.length = 3;
                 alt={`Логотип ${meta.label}`}
                 width="48"
                 height="48"
+                loading="lazy"
               />
             </div>
             <p class:list={["company", "p"]}>{meta.label}</p>
@@ -362,10 +363,15 @@ reviews.length = 3;
     display: grid;
     gap: var(--space20);
 
-    /* tablet */
-    @media (width >= 768px) {
+    /* desktop */
+    @media (width >= 991px) {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* widescreen */
+    @media (width >= 1200px) {
+      gap: var(--space32);
     }
 
     .card {
@@ -409,11 +415,16 @@ reviews.length = 3;
   }
 
   .foot {
-    /* tablet */
-    @media (width >= 768px) {
+    /* desktop */
+    @media (width >= 991px) {
       display: grid;
-      gap: var(--space32);
+      gap: var(--space20);
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* widescreen */
+    @media (width >= 1200px) {
+      gap: var(--space32);
     }
   }
 </style>

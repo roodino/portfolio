@@ -41,7 +41,7 @@ const initJobs = [
 ];
 
 const jobs = [...initJobs];
-jobs.length = 3;
+jobs.length = 6;
 ---
 
 <div class="jobs">
@@ -83,17 +83,23 @@ jobs.length = 3;
 
   .grid {
     display: grid;
-    gap: var(--space32);
+    gap: var(--space32) var(--space20);
 
-    /* tablet */
-    @media (width >= 768px) {
+    /* desktop */
+    @media (width >= 991px) {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* widescreen */
+    @media (width >= 1200px) {
+      gap: var(--space32);
     }
 
     .card {
       display: grid;
       gap: var(--space16);
+      grid-template-rows: auto 1fr;
 
       & .card__logo {
         display: grid;
@@ -107,11 +113,16 @@ jobs.length = 3;
   .foot {
     margin-top: var(--space12);
 
-    /* tablet */
-    @media (width >= 768px) {
+    /* desktop */
+    @media (width >= 991px) {
       display: grid;
-      gap: var(--space32);
+      gap: var(--space32) var(--space20);
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* widescreen */
+    @media (width >= 1200px) {
+      gap: var(--space32);
     }
   }
 </style>

@@ -17,6 +17,7 @@ const description =
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" href="/favicon.ico" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
     <meta name="generator" content={Astro.generator} />
 
@@ -58,13 +59,13 @@ const description =
     display: grid;
     gap: calc(2 * var(--space32));
 
-    /* tablet */
-    @media (width >= 768px) {
+    /* desktop */
+    @media (width >= 991px) {
       gap: calc(2 * var(--space32) + var(--space8));
     }
 
-    /* desktop */
-    @media (width >= 991px) {
+    /* widescreen */
+    @media (width >= 1200px) {
       padding: var(--space32) 0;
     }
   }

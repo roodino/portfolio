@@ -82,7 +82,7 @@ const initCards: { link: string; label: string; images: [string, string] }[] = [
 ];
 
 const cards = [...initCards];
-cards.length = 3;
+cards.length = 6;
 ---
 
 <div class="projects">
@@ -133,10 +133,14 @@ cards.length = 3;
     display: grid;
     gap: var(--space20);
 
-    /* tablet */
-    @media (width >= 768px) {
-      gap: var(--space32);
+    /* desktop */
+    @media (width >= 991px) {
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* widescreen */
+    @media (width >= 1200px) {
+      gap: var(--space32);
     }
 
     .card {
@@ -171,11 +175,16 @@ cards.length = 3;
   }
 
   .foot {
-    /* tablet */
-    @media (width >= 768px) {
+    /* desktop */
+    @media (width >= 991px) {
       display: grid;
-      gap: var(--space32);
+      gap: var(--space20);
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* widescreen */
+    @media (width >= 1200px) {
+      gap: var(--space32);
     }
   }
 </style>
