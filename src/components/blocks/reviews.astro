@@ -93,21 +93,37 @@ reviews.length = 3;
     }
   </div>
 
-  <Button size="l" fullWidth>Показать еще</Button>
+  <div class="foot">
+    <div></div>
+    <Button size="l" fullWidth>Показать еще</Button>
+  </div>
 </div>
 
 <style>
   .reviews {
     display: grid;
     gap: var(--space20);
+
+    /* tablet */
+    @media (width >= 768px) {
+      gap: var(--space32);
+    }
   }
 
   .grid {
     display: grid;
     gap: var(--space20);
 
+    /* tablet */
+    @media (width >= 768px) {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
     .card {
       display: grid;
+      align-items: flex-start;
+      grid-template-rows: min-content auto;
       gap: var(--space20);
       padding: var(--space20);
       border-radius: var(--border-radius16);
@@ -141,6 +157,15 @@ reviews.length = 3;
 
       & .card__text {
       }
+    }
+  }
+
+  .foot {
+    /* tablet */
+    @media (width >= 768px) {
+      display: grid;
+      gap: var(--space32);
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 </style>

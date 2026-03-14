@@ -65,15 +65,31 @@ const jobs = [
   .jobs {
     display: grid;
     gap: var(--space20);
+
+    /* tablet */
+    @media (width >= 768px) {
+      gap: var(--space32);
+    }
   }
 
   .grid {
     display: grid;
     gap: var(--space32);
 
+    /* tablet */
+    @media (width >= 768px) {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
     .card {
       display: grid;
       gap: var(--space12);
+
+      /* tablet */
+      @media (width >= 768px) {
+        gap: var(--space16);
+      }
 
       & .card__logo {
         display: grid;

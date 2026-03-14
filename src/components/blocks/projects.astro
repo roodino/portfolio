@@ -112,18 +112,32 @@ cards.length = 3;
     }
   </div>
 
-  <Button size="l" fullWidth>Показать еще</Button>
+  <div class="foot">
+    <div></div>
+    <Button size="l" fullWidth>Показать еще</Button>
+  </div>
 </div>
 
 <style>
   .projects {
     display: grid;
     gap: var(--space20);
+
+    /* tablet */
+    @media (width >= 768px) {
+      gap: var(--space32);
+    }
   }
 
   .grid {
     display: grid;
     gap: var(--space20);
+
+    /* tablet */
+    @media (width >= 768px) {
+      gap: var(--space32);
+      grid-template-columns: repeat(3, 1fr);
+    }
 
     .card {
       figure {
@@ -136,6 +150,11 @@ cards.length = 3;
           height: auto;
           aspect-ratio: 353 / 278;
           border-radius: var(--border-radius16);
+
+          /* tablet */
+          @media (width >= 768px) {
+            aspect-ratio: 360 / 280;
+          }
         }
 
         figcaption span {
@@ -155,15 +174,22 @@ cards.length = 3;
             transform-origin: right bottom;
             transition: transform var(--transition) ease-in-out;
           }
-
-          &:hover {
-            &::after {
-              transform-origin: left bottom;
-              transform: scaleX(1);
-            }
-          }
         }
       }
+
+      &:hover figure figcaption span::after {
+        transform-origin: left bottom;
+        transform: scaleX(1);
+      }
+    }
+  }
+
+  .foot {
+    /* tablet */
+    @media (width >= 768px) {
+      display: grid;
+      gap: var(--space32);
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 </style>

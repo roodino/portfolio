@@ -49,9 +49,19 @@ const { messages, links } = Astro.props;
   .intro {
     --avatar-size: 72px;
 
+    /* tablet */
+    @media (width >= 768px) {
+      --avatar-size: 144px;
+    }
+
     display: grid;
     grid-template-columns: var(--avatar-size) 1fr;
     gap: var(--space16);
+
+    /* tablet */
+    @media (width >= 768px) {
+      gap: var(--space32);
+    }
 
     .author {
       & .author__picture {
@@ -70,6 +80,14 @@ const { messages, links } = Astro.props;
           border-radius: 50%;
           background-color: #26de20;
           border: 3px solid var(--color-bg-main);
+
+          /* tablet */
+          @media (width >= 768px) {
+            bottom: 8px;
+            right: 8px;
+            width: 21px;
+            height: 21px;
+          }
         }
 
         img {

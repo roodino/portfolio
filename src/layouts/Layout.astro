@@ -33,5 +33,15 @@ import "../styles/global.css";
     padding: var(--space20);
     display: grid;
     gap: calc(2 * var(--space32));
+
+    /* tablet */
+    @media (width >= 768px) {
+      gap: calc(2 * var(--space32) + var(--space8));
+    }
+
+    /* desktop */
+    @media (width >= 991px) {
+      padding: var(--space32) 0;
+    }
   }
 </style>
