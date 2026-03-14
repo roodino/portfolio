@@ -1,8 +1,105 @@
 ---
 import Button from "../common/button.astro";
-const items = [];
+import img1x1 from "../../assets/images/projects/1@1x.webp";
+import img1x2 from "../../assets/images/projects/1@2x.webp";
+import img2x1 from "../../assets/images/projects/2@1x.webp";
+import img2x2 from "../../assets/images/projects/2@2x.webp";
+import img3x1 from "../../assets/images/projects/3@1x.webp";
+import img3x2 from "../../assets/images/projects/3@2x.webp";
+import img4x1 from "../../assets/images/projects/4@1x.webp";
+import img4x2 from "../../assets/images/projects/4@2x.webp";
+import img5x1 from "../../assets/images/projects/5@1x.webp";
+import img5x2 from "../../assets/images/projects/5@2x.webp";
+import img6x1 from "../../assets/images/projects/6@1x.webp";
+import img6x2 from "../../assets/images/projects/6@2x.webp";
+import img7x1 from "../../assets/images/projects/7@1x.webp";
+import img7x2 from "../../assets/images/projects/7@2x.webp";
+import img8x1 from "../../assets/images/projects/8@1x.webp";
+import img8x2 from "../../assets/images/projects/8@2x.webp";
+import img9x1 from "../../assets/images/projects/9@1x.webp";
+import img9x2 from "../../assets/images/projects/9@2x.webp";
+import img10x1 from "../../assets/images/projects/10@1x.webp";
+import img10x2 from "../../assets/images/projects/10@2x.webp";
+import img11x1 from "../../assets/images/projects/11@1x.webp";
+import img11x2 from "../../assets/images/projects/11@2x.webp";
+
+const cards: { link: string; label: string; images: [string, string] }[] = [
+  {
+    link: "",
+    label: "Stiki — магазин стикеров",
+    images: [img1x1.src, img1x2.src],
+  },
+  {
+    link: "",
+    label: "Joom — международный маркетплейс",
+    images: [img2x1.src, img2x2.src],
+  },
+  {
+    link: "",
+    label: "VK — социальная сеть",
+    images: [img3x1.src, img3x2.src],
+  },
+  {
+    link: "",
+    label: "Binomo — трейдинговая платформа",
+    images: [img4x1.src, img4x2.src],
+  },
+  {
+    link: "",
+    label: "Waliot — мониторинговая система",
+    images: [img5x1.src, img5x2.src],
+  },
+  {
+    link: "",
+    label: "Crypterium — криптобанк",
+    images: [img6x1.src, img6x2.src],
+  },
+  {
+    link: "",
+    label: "Formula Control — новости Формулы 1",
+    images: [img7x1.src, img7x2.src],
+  },
+  {
+    link: "",
+    label: "Zontik — приложение для знакомств",
+    images: [img8x1.src, img8x2.src],
+  },
+  {
+    link: "",
+    label: "Cono Calendar — онлайн календарь",
+    images: [img9x1.src, img9x2.src],
+  },
+  {
+    link: "",
+    label: "Cono TV — онлайн телевизор",
+    images: [img10x1.src, img10x2.src],
+  },
+  {
+    link: "",
+    label: "Doggio — все для собачников",
+    images: [img11x1.src, img11x2.src],
+  },
+];
 ---
 
-<h2 class:list={["h2", "title"]}>Портфолио <span>{items.length}</span></h2>
+<h2 class:list={["h2", "title"]}>Портфолио <span>{cards.length}</span></h2>
+
+{
+  cards.map(({ link, label, images }) => (
+    <a href={link} target="_blank" rel="noopener noreferrer">
+      <figure>
+        <img
+          src={images.at(0)}
+          srcset={`${images.at(0)} 1x, ${images.at(1)} 2x`}
+          alt=""
+          width="360"
+          height="280"
+          loading="lazy"
+        />
+        <figcaption>{label}</figcaption>
+      </figure>
+    </a>
+  ))
+}
 
 <Button size="l" fullWidth>Показать еще</Button>

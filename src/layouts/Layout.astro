@@ -17,7 +17,7 @@ import "../styles/global.css";
     <title>Astro Basics</title>
   </head>
   <body>
-    <div class="container">
+    <div class="container layout">
       <slot />
     </div>
   </body>
@@ -27,5 +27,9 @@ import "../styles/global.css";
   .container {
     max-width: var(--container-width);
     margin-inline: auto;
+  }
+
+  .layout {
+    padding: var(--space20);
   }
 </style>

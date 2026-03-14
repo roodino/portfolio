@@ -1,8 +1,70 @@
 ---
 import Button from "../common/button.astro";
-const items = [];
+
+import urentLogo from "../../assets/images/logo/urent.webp";
+import vkLogo from "../../assets/images/logo/vk.webp";
+import joomLogo from "../../assets/images/logo/joom.webp";
+
+enum Company {
+  Urent,
+  VK,
+  Joom,
+}
+
+const reviewAttrs: Record<
+  Company,
+  { label: string; year: string; logo: string; bgCard: string }
+> = {
+  [Company.Urent]: {
+    label: "Юрент",
+    year: "2024",
+    logo: urentLogo.src,
+    bgCard: "--color-third-bg",
+  },
+  [Company.VK]: {
+    label: "ВКонтакте",
+    year: "2022",
+    logo: vkLogo.src,
+    bgCard: "--color-primary-bg",
+  },
+  [Company.Joom]: {
+    label: "Joom",
+    year: "2018",
+    logo: joomLogo.src,
+    bgCard: "--color-secondary-bg",
+  },
+};
+
+const reviews = [
+  {
+    text: "Хочу отметить особый уровень способностей Рустама в работе над концептуальными решениями и редизайнами. Рустам прислушивается к коллегам, аргументированно отстаивает свою точку зрения, задаёт правильные вопросы там где это необходимо. Проявляет хорошее знание продукта и понимание бизнес задач, отличная нацеленность на результат.",
+    meta: reviewAttrs[Company.VK],
+  },
+  {
+    text: "У Рустама отличное ощущение продукта: знает какой элемент системный, где переиспользуется, как сделать так, чтобы наш дизайн не нагрузил соседние команды. Особенно это прочувствовала при недавней работе над новой сеткой для таба акций.",
+    meta: reviewAttrs[Company.Joom],
+  },
+  {
+    text: "В Рустаме чувствуется профессионализм и опыт работы, поэтому оттого ты доверяешь тем решениям, которые он предлагает. Это приятно.",
+    meta: reviewAttrs[Company.Urent],
+  },
+  {
+    text: "Рустам исходит из проблемы, а не из решений - т.е. не просто перебирает интерфейсные элементы, которыми можно что-то отобразить, а придумывает разные пути решения проблемы - может прийти и предложить альтернативный флоу.",
+    meta: reviewAttrs[Company.Joom],
+  },
+  {
+    text: "Нравится твоя вовлеченность в задачи, гибкость в поиске решений, и желание докопаться до сути проблемы. Профессионализм и экспертиза. Открытость к другим мнениям и предложениям. Ценю возможность обсуждать с тобой идеи и гипотезы.",
+    meta: reviewAttrs[Company.VK],
+  },
+  {
+    text: "– Я работал в команде бизнес-сообществ, где разрабатывал функции для бизнес-страниц, улучшал инструменты для компаний и брендов.",
+    meta: reviewAttrs[Company.Urent],
+  },
+];
 ---
 
-<h2 class:list={["h2", "title"]}>Отзывы обо мне <span>{items.length}</span></h2>
+<h2 class:list={["h2", "title"]}>
+  Отзывы обо мне <span>{reviews.length}</span>
+</h2>
 
 <Button size="l" fullWidth>Показать еще</Button>

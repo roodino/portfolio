@@ -1,4 +1,6 @@
 ---
+import type { HTMLAttributes } from "astro/types";
+
 interface Props {
   messages: string[];
   links: { href: string; label: string }[];
@@ -6,3 +8,16 @@ interface Props {
 
 const { messages, links } = Astro.props;
 ---
+
+<div class="intro">
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi assumenda
+  deleniti deserunt, eaque enim error, est ex explicabo hic molestiae molestias,
+  obcaecati optio perferendis provident quos reprehenderit repudiandae tempore
+  voluptatum.
+</div>
+
+<style>
+  .intro {
+    max-width: 532px;
+  }
+</style>
