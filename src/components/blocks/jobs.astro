@@ -5,8 +5,9 @@ import joom from "../../assets/images/jobs/joom.svg";
 import fifa from "../../assets/images/jobs/fifa.svg";
 import evalar from "../../assets/images/jobs/evalar.svg";
 import binomo from "../../assets/images/jobs/binomo.svg";
+import Button from "../common/button.astro";
 
-const jobs = [
+const initJobs = [
   {
     text: "Руковожу продуктовым дизайном в Urent. Отвечаю за мобильное приложение, сценарии аренды и общий пользовательский опыт.",
     bg: "#804AFF",
@@ -38,6 +39,9 @@ const jobs = [
     logo: binomo,
   },
 ];
+
+const jobs = [...initJobs];
+jobs.length = 3;
 ---
 
 <div class="jobs">
@@ -58,6 +62,11 @@ const jobs = [
         );
       })
     }
+  </div>
+
+  <div class="foot">
+    <div></div>
+    <Button size="l" fullWidth>Показать ещё</Button>
   </div>
 </div>
 
@@ -84,12 +93,7 @@ const jobs = [
 
     .card {
       display: grid;
-      gap: var(--space12);
-
-      /* tablet */
-      @media (width >= 768px) {
-        gap: var(--space16);
-      }
+      gap: var(--space16);
 
       & .card__logo {
         display: grid;
@@ -97,6 +101,17 @@ const jobs = [
         aspect-ratio: 353 / 88;
         border-radius: var(--border-radius16);
       }
+    }
+  }
+
+  .foot {
+    margin-top: var(--space12);
+
+    /* tablet */
+    @media (width >= 768px) {
+      display: grid;
+      gap: var(--space32);
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 </style>
