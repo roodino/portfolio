@@ -2,7 +2,7 @@
 import authorPicture from "../../assets/images/author.webp";
 
 interface Props {
-  messages: string[];
+  messages: { text: string; maxWidth: number }[];
   links: { href: string; label: string }[];
 }
 
@@ -22,9 +22,14 @@ const { messages, links } = Astro.props;
   </div>
   <div class="feed">
     {
-      messages.map((message) => (
+      messages.map(({ text, maxWidth }) => (
         <div>
-          <div class:list={["feed__item", "p"]}>{message}</div>
+          <div
+            class:list={["feed__item", "p"]}
+            style={`--max-width: ${maxWidth}px`}
+          >
+            {text}
+          </div>
         </div>
       ))
     }
@@ -104,15 +109,15 @@ const { messages, links } = Astro.props;
       display: grid;
       gap: var(--space12);
 
-      /* tablet */
-      @media (width >= 768px) {
-        max-width: 532px;
-      }
-
       & .feed__item {
         background-color: var(--color-primary-bg);
         padding: var(--space12) var(--space16);
         border-radius: var(--space16);
+
+        /* desktop */
+        @media (width >= 991px) {
+          max-width: var(--max-width);
+        }
 
         &[href] {
           display: inline-block;
