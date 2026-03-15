@@ -89,22 +89,35 @@ const initCards: { link: string; label: string; images: [string, string] }[] = [
 
   <div class="grid">
     {
-      initCards.map(({ link, label, images }) => (
-        <a href={link} target="_blank" rel="noopener noreferrer" class="card">
-          <figure>
-            <img
-              src={images.at(0)}
-              srcset={`${images.at(0)} 1x, ${images.at(1)} 2x`}
-              alt=""
-              width="360"
-              height="280"
-            />
-            <figcaption class="p">
-              <span>{label}</span>
-            </figcaption>
-          </figure>
-        </a>
-      ))
+      initCards.map(({ link, label, images }, index) => {
+        const style =
+          index > 5
+            ? "display: none; height: 0, opacity: 0; margin-bottom: 0"
+            : undefined;
+
+        return (
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card"
+            style={style}
+          >
+            <figure>
+              <img
+                src={images.at(0)}
+                srcset={`${images.at(0)} 1x, ${images.at(1)} 2x`}
+                alt=""
+                width="360"
+                height="280"
+              />
+              <figcaption class="p">
+                <span>{label}</span>
+              </figcaption>
+            </figure>
+          </a>
+        );
+      })
     }
   </div>
 
