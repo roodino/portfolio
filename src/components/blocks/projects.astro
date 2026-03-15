@@ -92,7 +92,7 @@ const initCards: { link: string; label: string; images: [string, string] }[] = [
       initCards.map(({ link, label, images }, index) => {
         const style =
           index > 5
-            ? "display: none; height: 0, opacity: 0; margin-bottom: 0"
+            ? "display: none; height: 0; opacity: 0; margin-bottom: 0"
             : undefined;
 
         return (
@@ -136,11 +136,6 @@ const initCards: { link: string; label: string; images: [string, string] }[] = [
     display: grid;
     gap: 0 var(--space20);
 
-    /* widescreen */
-    @media (width >= 1200px) {
-      margin-top: var(--space32);
-    }
-
     /* desktop */
     @media (width >= 991px) {
       grid-template-columns: repeat(3, 1fr);
@@ -148,6 +143,7 @@ const initCards: { link: string; label: string; images: [string, string] }[] = [
 
     /* widescreen */
     @media (width >= 1200px) {
+      margin-top: var(--space32);
       gap: 0 var(--space32);
     }
 
@@ -205,6 +201,7 @@ const initCards: { link: string; label: string; images: [string, string] }[] = [
 
   .foot {
     overflow: hidden;
+    transition: height var(--transition);
 
     /* desktop */
     @media (width >= 991px) {
@@ -217,6 +214,10 @@ const initCards: { link: string; label: string; images: [string, string] }[] = [
     @media (width >= 1200px) {
       gap: var(--space32);
     }
+
+    &.hidden {
+      height: 0;
+    }
   }
 </style>
 
@@ -227,46 +228,50 @@ const initCards: { link: string; label: string; images: [string, string] }[] = [
     document.querySelectorAll(".projects .card");
   const showBoreBtn = document.querySelector(".projects button");
 
-  let visibleCardsCount = isDesktop() ? 6 : 3;
-  const desktopStep = 6;
-  const mobileStep = 3;
+  if (showBoreBtn) {
+    let visibleCardsCount = isDesktop() ? 6 : 3;
+    const desktopStep = 6;
+    const mobileStep = 3;
 
-  projects.forEach((project, index) => {
-    if (index > visibleCardsCount - 1) {
-      project.style.display = "none";
-      project.style.height = "0px";
-      project.style.opacity = "0";
-      project.style.marginBottom = "0px";
-    }
-  });
-
-  showBoreBtn?.addEventListener("click", () => {
-    if (visibleCardsCount < projects.length) {
-      const step = isDesktop() ? desktopStep : mobileStep;
-      const newCards = Array.from(projects)
-        .filter((project) => project.style.display === "none")
-        .filter((_, index) => index < step);
-
-      const tl = gsap.timeline();
-      tl.to(newCards, { display: "block", duration: 0 })
-        .to(newCards, {
-          height: "auto",
-          marginBottom: isWidescreen() ? 32 : 20,
-          duration: 0.25,
-        })
-        .to(newCards, { opacity: 1, duration: 0.35 });
-
-      visibleCardsCount += step;
-
-      if (visibleCardsCount >= projects.length) {
-        const footEl = showBoreBtn?.parentNode;
-        const tl = gsap.timeline();
-        tl.to(footEl, { height: 0, duration: 0.3 }).to(footEl, {
-          display: "none",
-        });
+    projects.forEach((project, index) => {
+      if (index > visibleCardsCount - 1) {
+        project.style.display = "none";
+        project.style.height = "0px";
+        project.style.opacity = "0";
+        project.style.marginBottom = "0px";
       }
+    });
+
+    if (visibleCardsCount < projects.length) {
+      const footEl: HTMLElement | null = showBoreBtn?.parentElement;
+      footEl?.classList.remove("hidden");
     }
-  });
+
+    showBoreBtn.addEventListener("click", () => {
+      if (visibleCardsCount < projects.length) {
+        const step = isDesktop() ? desktopStep : mobileStep;
+        const newCards = Array.from(projects)
+          .filter((project) => project.style.display === "none")
+          .filter((_, index) => index < step);
+
+        const tl = gsap.timeline();
+        tl.to(newCards, { display: "block", duration: 0 })
+          .to(newCards, {
+            height: "auto",
+            marginBottom: isWidescreen() ? 32 : 20,
+            duration: 0.25,
+          })
+          .to(newCards, { opacity: 1, duration: 0.35 });
+
+        visibleCardsCount += step;
+
+        if (visibleCardsCount >= projects.length) {
+          const footEl: HTMLElement | null = showBoreBtn?.parentElement;
+          footEl?.classList.add("hidden");
+        }
+      }
+    });
+  }
 
   function isDesktop() {
     return window.innerWidth >= 991;

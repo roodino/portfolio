@@ -39,9 +39,6 @@ const initJobs = [
     logo: binomo,
   },
 ];
-
-const jobs = [...initJobs];
-jobs.length = 6;
 ---
 
 <div class="jobs">
@@ -49,11 +46,15 @@ jobs.length = 6;
 
   <div class="grid">
     {
-      jobs.map(({ text, bg, logo }) => {
+      initJobs.map(({ text, bg, logo }, index) => {
         const Logo = logo;
+        const style =
+          index > 5
+            ? "display: none; height: 0; opacity: 0; margin-bottom: 0"
+            : undefined;
 
         return (
-          <div class="card">
+          <div class="card" style={style}>
             <div class="card__logo" style={`background-color: ${bg}`}>
               <Logo />
             </div>
@@ -64,7 +65,7 @@ jobs.length = 6;
     }
   </div>
 
-  <div class="foot">
+  <div class="foot hidden">
     <div></div>
     <Button size="l" fullWidth>Показать ещё</Button>
   </div>
@@ -72,34 +73,48 @@ jobs.length = 6;
 
 <style>
   .jobs {
-    display: grid;
-    gap: var(--space20);
-
-    /* tablet */
-    @media (width >= 768px) {
-      gap: var(--space32);
-    }
   }
 
   .grid {
+    margin-top: var(--space20);
     display: grid;
-    gap: var(--space32) var(--space20);
+    gap: 0 var(--space20);
 
     /* desktop */
     @media (width >= 991px) {
-      display: grid;
       grid-template-columns: repeat(3, 1fr);
     }
 
     /* widescreen */
     @media (width >= 1200px) {
-      gap: var(--space32);
+      margin-top: var(--space32);
+      gap: 0 var(--space32);
     }
 
     .card {
       display: grid;
       gap: var(--space16);
       grid-template-rows: auto 1fr;
+      overflow: hidden;
+      margin-bottom: var(--space20);
+
+      /* widescreen */
+      @media (width >= 1200px) {
+        margin-bottom: var(--space32);
+      }
+
+      &:nth-last-child(1) {
+        margin-bottom: 0 !important;
+      }
+
+      /* desktop */
+      @media (width >= 991px) {
+        &:nth-last-child(1),
+        &:nth-last-child(2),
+        &:nth-last-child(3) {
+          margin-bottom: 0 !important;
+        }
+      }
 
       & .card__logo {
         display: grid;
@@ -111,7 +126,9 @@ jobs.length = 6;
   }
 
   .foot {
+    overflow: hidden;
     margin-top: var(--space12);
+    transition: height var(--transition);
 
     /* desktop */
     @media (width >= 991px) {
@@ -124,5 +141,80 @@ jobs.length = 6;
     @media (width >= 1200px) {
       gap: var(--space32);
     }
+
+    &.hidden {
+      height: 0;
+    }
   }
 </style>
+
+<script>
+  import gsap from "gsap";
+
+  const jobs: NodeListOf<HTMLElement> =
+    document.querySelectorAll(".jobs .card");
+  const showBoreBtn: HTMLElement | null =
+    document.querySelector(".jobs button");
+
+  if (showBoreBtn) {
+    let visibleCardsCount = isDesktop() ? 6 : 3;
+    const desktopStep = 6;
+    const mobileStep = 3;
+
+    jobs.forEach((job, index) => {
+      if (index > visibleCardsCount - 1) {
+        job.style.display = "none";
+        job.style.height = "0px";
+        job.style.opacity = "0";
+        job.style.marginBottom = "0px";
+      }
+    });
+
+    if (visibleCardsCount < jobs.length) {
+      const footEl: HTMLElement | null = showBoreBtn?.parentElement;
+      footEl?.classList.remove("hidden");
+    }
+
+    showBoreBtn.addEventListener("click", () => {
+      if (visibleCardsCount < jobs.length) {
+        const step = isDesktop() ? desktopStep : mobileStep;
+        const newCards = Array.from(jobs)
+          .filter((job) => job.style.display === "none")
+          .filter((_, index) => index < step);
+
+        const tl = gsap.timeline();
+        tl.to(newCards, { display: "grid", duration: 0 })
+          .to(newCards, {
+            height: "auto",
+            marginBottom: isWidescreen() ? 32 : 20,
+            duration: 0.25,
+          })
+          .to(newCards, { opacity: 1, duration: 0.35 });
+
+        visibleCardsCount += step;
+
+        if (visibleCardsCount >= jobs.length) {
+          hideShowBtn(showBoreBtn);
+        }
+      }
+    });
+  }
+
+  function isDesktop() {
+    return window.innerWidth >= 991;
+  }
+  function isWidescreen() {
+    return window.innerWidth >= 1200;
+  }
+  function hideShowBtn(btn: HTMLElement | null) {
+    if (!btn) {
+      return;
+    }
+
+    const footEl = btn?.parentNode;
+    const tl = gsap.timeline();
+    tl.to(footEl, { height: 0, duration: 0.3 }).to(footEl, {
+      display: "none",
+    });
+  }
+</script>
