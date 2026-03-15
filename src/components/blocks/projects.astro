@@ -80,9 +80,6 @@ const initCards: { link: string; label: string; images: [string, string] }[] = [
     images: [img11x1.src, img11x2.src],
   },
 ];
-
-const cards = [...initCards];
-cards.length = 6;
 ---
 
 <div class="projects">
@@ -92,7 +89,7 @@ cards.length = 6;
 
   <div class="grid">
     {
-      cards.map(({ link, label, images }) => (
+      initCards.map(({ link, label, images }) => (
         <a href={link} target="_blank" rel="noopener noreferrer" class="card">
           <figure>
             <img
@@ -101,7 +98,6 @@ cards.length = 6;
               alt=""
               width="360"
               height="280"
-              loading="lazy"
             />
             <figcaption class="p">
               <span>{label}</span>
@@ -120,18 +116,17 @@ cards.length = 6;
 
 <style>
   .projects {
-    display: grid;
-    gap: var(--space20);
-
-    /* tablet */
-    @media (width >= 768px) {
-      gap: var(--space32);
-    }
   }
 
   .grid {
+    margin-top: var(--space20);
     display: grid;
-    gap: var(--space20);
+    gap: 0 var(--space20);
+
+    /* widescreen */
+    @media (width >= 1200px) {
+      margin-top: var(--space32);
+    }
 
     /* desktop */
     @media (width >= 991px) {
@@ -140,10 +135,32 @@ cards.length = 6;
 
     /* widescreen */
     @media (width >= 1200px) {
-      gap: var(--space32);
+      gap: 0 var(--space32);
     }
 
     .card {
+      overflow: hidden;
+      margin-bottom: var(--space20);
+      will-change: transform, opacity, height;
+
+      /* widescreen */
+      @media (width >= 1200px) {
+        margin-bottom: var(--space32);
+      }
+
+      &:nth-last-child(1) {
+        margin-bottom: 0 !important;
+      }
+
+      /* desktop */
+      @media (width >= 991px) {
+        &:nth-last-child(1),
+        &:nth-last-child(2),
+        &:nth-last-child(3) {
+          margin-bottom: 0 !important;
+        }
+      }
+
       figure {
         margin: 0;
         display: grid;
@@ -175,6 +192,8 @@ cards.length = 6;
   }
 
   .foot {
+    overflow: hidden;
+
     /* desktop */
     @media (width >= 991px) {
       display: grid;
@@ -188,3 +207,59 @@ cards.length = 6;
     }
   }
 </style>
+
+<script>
+  import gsap from "gsap";
+
+  const projects: NodeListOf<HTMLElement> =
+    document.querySelectorAll(".projects .card");
+  const showBoreBtn = document.querySelector(".projects button");
+
+  let visibleCardsCount = isDesktop() ? 6 : 3;
+  const desktopStep = 6;
+  const mobileStep = 3;
+
+  projects.forEach((project, index) => {
+    if (index > visibleCardsCount - 1) {
+      project.style.display = "none";
+      project.style.height = "0px";
+      project.style.opacity = "0";
+      project.style.marginBottom = "0px";
+    }
+  });
+
+  showBoreBtn?.addEventListener("click", () => {
+    if (visibleCardsCount < projects.length) {
+      const step = isDesktop() ? desktopStep : mobileStep;
+      const newCards = Array.from(projects)
+        .filter((project) => project.style.display === "none")
+        .filter((_, index) => index < step);
+
+      const tl = gsap.timeline();
+      tl.to(newCards, { display: "block", duration: 0 })
+        .to(newCards, {
+          height: "auto",
+          marginBottom: isWidescreen() ? 32 : 20,
+          duration: 0.25,
+        })
+        .to(newCards, { opacity: 1, duration: 0.25 });
+
+      visibleCardsCount += step;
+
+      if (visibleCardsCount >= projects.length) {
+        const footEl = showBoreBtn?.parentNode;
+        const tl = gsap.timeline();
+        tl.to(footEl, { height: 0, duration: 0.3 }).to(footEl, {
+          display: "none",
+        });
+      }
+    }
+  });
+
+  function isDesktop() {
+    return window.innerWidth >= 991;
+  }
+  function isWidescreen() {
+    return window.innerWidth >= 1200;
+  }
+</script>
