@@ -1,13 +1,14 @@
 ---
 interface Props {
   id: string;
+  withNoscript?: boolean;
 }
 
-const { id } = Astro.props;
+const { id, withNoscript = false } = Astro.props;
 ---
 
 <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
+<script is:inline define:vars={{ id }}>
   (function (m, e, t, r, i, k, a) {
     m[i] =
       m[i] ||
@@ -44,13 +45,17 @@ const { id } = Astro.props;
     trackLinks: true,
   });
 </script>
-<noscript
-  ><div>
-    <img
-      src=`https://mc.yandex.ru/watch/${id}`
-      style="position:absolute; left:-9999px;"
-      alt=""
-    />
-  </div></noscript
->
+{
+  withNoscript && (
+    <noscript>
+      <div>
+        <img
+          src={`https://mc.yandex.ru/watch/${id}`}
+          style="position:absolute; left:-9999px;"
+          alt=""
+        />
+      </div>
+    </noscript>
+  )
+}
 <!-- /Yandex.Metrika counter -->

@@ -47,9 +47,9 @@ const image = `${Astro.url.origin}/cover.jpg`;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
 
-    <YmCounter id={ymId} />
   </head>
   <body>
+    <YmCounter id={ymId} withNoscript />
     <div class="container layout">
       <slot />
     </div>
