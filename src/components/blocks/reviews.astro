@@ -377,17 +377,13 @@ const reviews = shuffleReviews(initReviews);
 
     /* desktop */
     @media (width >= 991px) {
-      display: block;
-      column-count: 3;
-      column-gap: var(--space20);
-      margin-bottom: calc(var(--space20) * -1);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
     }
 
     /* widescreen */
     @media (width >= 1200px) {
       gap: var(--space32);
-      column-gap: var(--space32);
-      margin-bottom: calc(var(--space32) * -1);
     }
 
     .card {
@@ -397,19 +393,6 @@ const reviews = shuffleReviews(initReviews);
       gap: var(--space20);
       padding: var(--space20);
       border-radius: var(--border-radius16);
-
-      /* desktop */
-      @media (width >= 991px) {
-        width: 100%;
-        margin-bottom: var(--space20);
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
-
-      /* widescreen */
-      @media (width >= 1200px) {
-        margin-bottom: var(--space32);
-      }
 
       & .card__head {
         display: grid;
