@@ -25,15 +25,9 @@ import { initReviews } from "../../data.ts";
 
 <style is:global>
   .reviews {
-    display: grid;
-    gap: var(--space20);
-
-    /* tablet */
-    @media (width >= 768px) {
-      gap: var(--space32);
-    }
-
     .mobile-grid {
+      margin-top: var(--space20);
+
       /* desktop */
       @media (width >= 991px) {
         display: none;
@@ -42,13 +36,14 @@ import { initReviews } from "../../data.ts";
 
     .grid {
       display: none;
-      gap: var(--space20);
-      align-items: flex-start;
 
       /* desktop */
       @media (width >= 991px) {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
+        gap: var(--space20);
+        align-items: flex-start;
+        margin-top: var(--space32);
       }
 
       /* widescreen */
@@ -107,27 +102,39 @@ import { initReviews } from "../../data.ts";
   }
 
   .foot {
+    overflow: hidden;
+    transition: height var(--transition);
+    margin-top: var(--space20);
+
     /* desktop */
     @media (width >= 991px) {
       display: grid;
       gap: var(--space20);
       grid-template-columns: repeat(3, 1fr);
+      margin-top: var(--space20);
     }
 
     /* widescreen */
     @media (width >= 1200px) {
       gap: var(--space32);
     }
+
+    &.hidden {
+      height: 0;
+    }
   }
 </style>
 
 <script>
+  import gsap from "gsap";
   import { initReviews, type ICard } from "../../data.ts";
 
   export const reviews = shuffleReviews(initReviews);
 
-  const initReviewCount = 6;
-  const step = 6;
+  const initReviewCount = isDesktop() ? 6 : 3;
+  const mobileStep = 3;
+  const desktopStep = 6;
+  let visibleClientReviews = 0;
 
   export const serverReviews = reviews.slice(0, initReviewCount);
   export const clientReviews = reviews.slice(initReviewCount);
@@ -145,13 +152,32 @@ import { initReviews } from "../../data.ts";
     ".reviews .grid #third",
   );
 
-  if (mobileGrid && col1 && col2 && col3) {
+  const showMoreBtn = document.querySelector(".reviews button");
+
+  if (mobileGrid && col1 && col2 && col3 && showMoreBtn) {
     const cols: [HTMLElement, HTMLElement, HTMLElement] = [col1, col2, col3];
     const colsLength: [number, number, number] = [0, 0, 0];
 
     fillGrid(serverReviews);
 
-    function fillGrid(reviews: ICard[]) {
+    showMoreBtn.addEventListener("click", () => {
+      const step = isDesktop() ? desktopStep : mobileStep;
+
+      const reviewsChunk = clientReviews.slice(
+        visibleClientReviews,
+        visibleClientReviews + step,
+      );
+      fillGrid(reviewsChunk, true);
+
+      visibleClientReviews += step;
+
+      if (visibleClientReviews >= clientReviews.length) {
+        const footEl: HTMLElement | null = showMoreBtn?.parentElement;
+        footEl?.classList.add("hidden");
+      }
+    });
+
+    function fillGrid(reviews: ICard[], withAnimation = false) {
       reviews.forEach((review) => {
         const card = document.createElement("div");
         card.classList.add("card");
@@ -164,17 +190,65 @@ import { initReviews } from "../../data.ts";
         // 100 - это магический коэффициент
         colsLength[minColIndex] += review.text.length + 100;
 
-        addToDesktop(card, minColIndex);
-        addToMobile(card.cloneNode(true) as HTMLElement);
+        const mobileCard = card.cloneNode(true) as HTMLElement;
+
+        addToDesktop(card, minColIndex, isDesktop() && withAnimation);
+        addToMobile(mobileCard, !isDesktop() && withAnimation);
       });
     }
 
-    function addToDesktop(card: HTMLElement, index: number) {
-      cols[index].appendChild(card);
+    function addToDesktop(
+      card: HTMLElement,
+      index: number,
+      withAnimation: boolean,
+    ) {
+      console.log("addToDesktop", withAnimation);
+
+      const currentCol = cols[index];
+
+      if (withAnimation) {
+        card.style.display = "none";
+        card.style.height = "0px";
+        card.style.opacity = "0";
+        card.style.marginBottom = "0px";
+      }
+
+      currentCol.appendChild(card);
+
+      if (withAnimation) {
+        const tl = gsap.timeline();
+        tl.to(card, { display: "grid", duration: 0 })
+          .to(card, {
+            height: "auto",
+            marginBottom: 20,
+            duration: 0.15,
+          })
+          .to(card, { opacity: 1, duration: 0.35 });
+      }
     }
 
-    function addToMobile(card: HTMLElement) {
+    function addToMobile(card: HTMLElement, withAnimation: boolean) {
+      console.log("addToMobile", withAnimation);
+
+      if (withAnimation) {
+        card.style.display = "none";
+        card.style.height = "0px";
+        card.style.opacity = "0";
+        card.style.marginBottom = "0px";
+      }
+
       mobileGrid?.appendChild(card);
+
+      if (withAnimation) {
+        const tl = gsap.timeline();
+        tl.to(card, { display: "grid", duration: 0 })
+          .to(card, {
+            height: "auto",
+            marginBottom: 20,
+            duration: 0.15,
+          })
+          .to(card, { opacity: 1, duration: 0.35 });
+      }
     }
   }
 
@@ -210,5 +284,12 @@ import { initReviews } from "../../data.ts";
     }
 
     return shuffledItems;
+  }
+
+  function isDesktop() {
+    return window.innerWidth >= 991;
+  }
+  function isWidescreen() {
+    return window.innerWidth >= 1200;
   }
 </script>

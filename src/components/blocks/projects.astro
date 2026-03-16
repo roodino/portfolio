@@ -226,9 +226,9 @@ const initCards: { link: string; label: string; images: [string, string] }[] = [
 
   const projects: NodeListOf<HTMLElement> =
     document.querySelectorAll(".projects .card");
-  const showBoreBtn = document.querySelector(".projects button");
+  const showMoreBtn = document.querySelector(".projects button");
 
-  if (showBoreBtn) {
+  if (showMoreBtn) {
     let visibleCardsCount = isDesktop() ? 6 : 3;
     const desktopStep = 6;
     const mobileStep = 3;
@@ -243,11 +243,11 @@ const initCards: { link: string; label: string; images: [string, string] }[] = [
     });
 
     if (visibleCardsCount < projects.length) {
-      const footEl: HTMLElement | null = showBoreBtn?.parentElement;
+      const footEl: HTMLElement | null = showMoreBtn?.parentElement;
       footEl?.classList.remove("hidden");
     }
 
-    showBoreBtn.addEventListener("click", () => {
+    showMoreBtn.addEventListener("click", () => {
       if (visibleCardsCount < projects.length) {
         const step = isDesktop() ? desktopStep : mobileStep;
         const newCards = Array.from(projects)
@@ -266,7 +266,7 @@ const initCards: { link: string; label: string; images: [string, string] }[] = [
         visibleCardsCount += step;
 
         if (visibleCardsCount >= projects.length) {
-          const footEl: HTMLElement | null = showBoreBtn?.parentElement;
+          const footEl: HTMLElement | null = showMoreBtn?.parentElement;
           footEl?.classList.add("hidden");
         }
       }
