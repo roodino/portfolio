@@ -25,8 +25,15 @@ import { initReviews } from "../../data.ts";
 
 <style is:global>
   .reviews {
+    --gap: var(--space20);
+
+    /* widescreen */
+    @media (width >= 1200px) {
+      --gap: var(--space32);
+    }
+
     .mobile-grid {
-      margin-top: var(--space20);
+      margin-top: var(--gap);
 
       /* desktop */
       @media (width >= 991px) {
@@ -41,14 +48,9 @@ import { initReviews } from "../../data.ts";
       @media (width >= 991px) {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: var(--space20);
+        gap: var(--gap);
         align-items: flex-start;
-        margin-top: var(--space32);
-      }
-
-      /* widescreen */
-      @media (width >= 1200px) {
-        gap: var(--space32);
+        margin-top: var(--gap);
       }
     }
 
@@ -59,14 +61,10 @@ import { initReviews } from "../../data.ts";
       gap: var(--space20);
       padding: var(--space20);
       border-radius: var(--border-radius16);
+      margin-bottom: var(--gap);
 
-      &:not(:last-child) {
-        margin-bottom: var(--space20);
-
-        /* widescreen */
-        @media (width >= 1200px) {
-          margin-bottom: var(--space32);
-        }
+      &:last-child {
+        margin-bottom: 0 !important;
       }
 
       & .card__head {
@@ -99,28 +97,17 @@ import { initReviews } from "../../data.ts";
       & .card__text {
       }
     }
-  }
 
-  .foot {
-    overflow: hidden;
-    transition: height var(--transition);
-    margin-top: var(--space20);
+    .foot {
+      overflow: hidden;
+      margin-top: var(--gap);
 
-    /* desktop */
-    @media (width >= 991px) {
-      display: grid;
-      gap: var(--space20);
-      grid-template-columns: repeat(3, 1fr);
-      margin-top: var(--space20);
-    }
-
-    /* widescreen */
-    @media (width >= 1200px) {
-      gap: var(--space32);
-    }
-
-    &.hidden {
-      height: 0;
+      /* desktop */
+      @media (width >= 991px) {
+        display: grid;
+        gap: var(--gap);
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
   }
 </style>
@@ -173,7 +160,10 @@ import { initReviews } from "../../data.ts";
 
       if (visibleClientReviews >= clientReviews.length) {
         const footEl: HTMLElement | null = showMoreBtn?.parentElement;
-        footEl?.classList.add("hidden");
+        const tl = gsap.timeline();
+        tl.to(footEl, { height: 0, duration: 0.2 }).to(footEl, {
+          display: "none",
+        });
       }
     });
 
@@ -202,8 +192,6 @@ import { initReviews } from "../../data.ts";
       index: number,
       withAnimation: boolean,
     ) {
-      console.log("addToDesktop", withAnimation);
-
       const currentCol = cols[index];
 
       if (withAnimation) {
@@ -220,7 +208,7 @@ import { initReviews } from "../../data.ts";
         tl.to(card, { display: "grid", duration: 0 })
           .to(card, {
             height: "auto",
-            marginBottom: 20,
+            marginBottom: "var(--gap)",
             duration: 0.15,
           })
           .to(card, { opacity: 1, duration: 0.35 });
@@ -228,8 +216,6 @@ import { initReviews } from "../../data.ts";
     }
 
     function addToMobile(card: HTMLElement, withAnimation: boolean) {
-      console.log("addToMobile", withAnimation);
-
       if (withAnimation) {
         card.style.display = "none";
         card.style.height = "0px";
@@ -244,7 +230,7 @@ import { initReviews } from "../../data.ts";
         tl.to(card, { display: "grid", duration: 0 })
           .to(card, {
             height: "auto",
-            marginBottom: 20,
+            marginBottom: "var(--gap)",
             duration: 0.15,
           })
           .to(card, { opacity: 1, duration: 0.35 });
@@ -288,8 +274,5 @@ import { initReviews } from "../../data.ts";
 
   function isDesktop() {
     return window.innerWidth >= 991;
-  }
-  function isWidescreen() {
-    return window.innerWidth >= 1200;
   }
 </script>

@@ -65,7 +65,7 @@ const initJobs = [
     }
   </div>
 
-  <div class="foot hidden">
+  <div class="foot">
     <div></div>
     <Button size="l" fullWidth>Показать ещё</Button>
   </div>
@@ -73,12 +73,13 @@ const initJobs = [
 
 <style>
   .jobs {
+    --gap: var(--space32);
   }
 
   .grid {
     margin-top: var(--space20);
     display: grid;
-    gap: 0 var(--space20);
+    gap: 0 var(--gap);
 
     /* desktop */
     @media (width >= 991px) {
@@ -88,7 +89,6 @@ const initJobs = [
     /* widescreen */
     @media (width >= 1200px) {
       margin-top: var(--space32);
-      gap: 0 var(--space32);
     }
 
     .card {
@@ -96,12 +96,7 @@ const initJobs = [
       gap: var(--space16);
       grid-template-rows: auto 1fr;
       overflow: hidden;
-      margin-bottom: var(--space20);
-
-      /* widescreen */
-      @media (width >= 1200px) {
-        margin-bottom: var(--space32);
-      }
+      margin-bottom: var(--gap);
 
       &:nth-last-child(1) {
         margin-bottom: 0 !important;
@@ -126,24 +121,13 @@ const initJobs = [
   }
 
   .foot {
+    display: none;
     overflow: hidden;
-    margin-top: var(--space12);
-    transition: height var(--transition);
 
     /* desktop */
     @media (width >= 991px) {
-      display: grid;
-      gap: var(--space32) var(--space20);
+      gap: var(--gap);
       grid-template-columns: repeat(3, 1fr);
-    }
-
-    /* widescreen */
-    @media (width >= 1200px) {
-      gap: var(--space32);
-    }
-
-    &.hidden {
-      height: 0;
     }
   }
 </style>
@@ -172,7 +156,11 @@ const initJobs = [
 
     if (visibleCardsCount < jobs.length) {
       const footEl: HTMLElement | null = showBoreBtn?.parentElement;
-      footEl?.classList.remove("hidden");
+      const tl = gsap.timeline();
+      tl.to(footEl, { display: "grid", duration: 0 }).to(footEl, {
+        height: "auto",
+        duration: 0.2,
+      });
     }
 
     showBoreBtn.addEventListener("click", () => {
@@ -186,7 +174,7 @@ const initJobs = [
         tl.to(newCards, { display: "grid", duration: 0 })
           .to(newCards, {
             height: "auto",
-            marginBottom: isWidescreen() ? 32 : 20,
+            marginBottom: "var(--gap)",
             duration: 0.15,
           })
           .to(newCards, { opacity: 1, duration: 0.35 });
@@ -203,9 +191,6 @@ const initJobs = [
   function isDesktop() {
     return window.innerWidth >= 991;
   }
-  function isWidescreen() {
-    return window.innerWidth >= 1200;
-  }
   function hideShowBtn(btn: HTMLElement | null) {
     if (!btn) {
       return;
@@ -213,7 +198,7 @@ const initJobs = [
 
     const footEl = btn?.parentNode;
     const tl = gsap.timeline();
-    tl.to(footEl, { height: 0, duration: 0.3 }).to(footEl, {
+    tl.to(footEl, { height: 0, duration: 0.2 }).to(footEl, {
       display: "none",
     });
   }
