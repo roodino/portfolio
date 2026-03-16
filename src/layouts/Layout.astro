@@ -1,7 +1,15 @@
 ---
 import { Font } from "astro:assets";
 
+import YmCounter from "../components/common/ym-counter.astro";
+
 import "../styles/global.css";
+
+interface Props {
+  ymId: string;
+}
+
+const { ymId } = Astro.props;
 
 const pageUrl = Astro.url.href;
 const title = "Рустам Газов";
@@ -38,6 +46,8 @@ const image = `${Astro.url.origin}/cover.jpg`;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
+
+    <YmCounter id={ymId} />
   </head>
   <body>
     <div class="container layout">
