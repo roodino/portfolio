@@ -4,7 +4,7 @@ import Button from "../common/button.astro";
 import { initReviews } from "../../data.ts";
 ---
 
-<div class="reviews">
+<section class="reviews">
   <h2 class:list={["h2", "title"]}>
     Отзывы обо мне <span>{initReviews.length}</span>
   </h2>
@@ -21,7 +21,7 @@ import { initReviews } from "../../data.ts";
     <div></div>
     <Button size="l" fullWidth>Показать ещё</Button>
   </div>
-</div>
+</section>
 
 <style is:global>
   .reviews {
